@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'dart:math';
+import 'dart:collection';
 
 const int CELL_SIZE = 10;
 
@@ -28,4 +29,28 @@ void clear() {
   ctx
     ?..fillStyle = "white"
     ..fillRect(0, 0, canvas?.width ?? 0, canvas?.height ?? 0);
+}
+
+class Keyboard {
+  final Map<int, bool> _keys = {};
+
+  Keyboard() {
+    window.onKeyDown.listen((KeyboardEvent event) {
+      _keys[event.keyCode] = true;
+    });
+
+    window.onKeyUp.listen((KeyboardEvent event) {
+      _keys[event.keyCode] = false;
+    });
+  }
+
+  bool isPressed(int keyCode) => _keys[keyCode] ?? false;
+}
+
+class Snake {
+  // directions
+  static const Point LEFT = Point(-1, 0);
+  static const Point RIGHT = Point(1, 0);
+  static const Point UP = Point(0, -1);
+  static const Point DOWN = Point(0, 1);
 }
