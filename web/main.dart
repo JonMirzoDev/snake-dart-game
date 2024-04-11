@@ -9,6 +9,7 @@ late Game game;
 
 CanvasElement? canvas;
 CanvasRenderingContext2D? ctx;
+DivElement? scoreDisplay; // Element to display the score
 
 void main() {
   canvas = querySelector('#canvas') as CanvasElement?;
@@ -122,7 +123,7 @@ class Snake {
 
 class Game {
   // smaller numbers make the game run faster
-  static const num GAME_SPEED = 50;
+  static const num GAME_SPEED = 60;
   num _lastTimeStamp = 0;
 
   // a few convenience variables to simplify calculations
