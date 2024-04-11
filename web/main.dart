@@ -1,19 +1,22 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:math';
 import 'dart:collection';
 
 const int CELL_SIZE = 10;
 Keyboard keyboard = Keyboard();
+late Game game;
 
 CanvasElement? canvas;
 CanvasRenderingContext2D? ctx;
 
 void main() {
-  canvas = querySelector('#canvas') as CanvasElement;
+  canvas = querySelector('#canvas') as CanvasElement?;
+  canvas?.focus();
   ctx = canvas?.getContext('2d') as CanvasRenderingContext2D?;
 
-  Snake snake = Snake();
-  clear();
+  game = Game();
+  game.run();
 }
 
 void drawCell(Point coords, String color) {
@@ -114,5 +117,69 @@ class Snake {
     _checkInput();
     _move();
     _draw();
+  }
+}
+
+class Game {
+  // smaller numbers make the game run faster
+  static const num GAME_SPEED = 50;
+  num _lastTimeStamp = 0;
+
+  // a few convenience variables to simplify calculations
+  late int _rightEdgeX;
+  late int _bottomEdgeY;
+
+  late Snake _snake;
+  late Point _food;
+
+  Game() {
+    _rightEdgeX = canvas!.width! ~/ CELL_SIZE;
+    _bottomEdgeY = canvas!.height! ~/ CELL_SIZE;
+
+    init();
+  }
+
+  void init() {
+    _snake = Snake();
+    _food = _randomPoint();
+  }
+
+  Point _randomPoint() {
+    Random random = Random();
+    return Point(random.nextInt(_rightEdgeX), random.nextInt(_bottomEdgeY));
+  }
+
+  void _checkForCollisions() {
+    if (_snake.head == _food) {
+      _snake.grow();
+      _food = _randomPoint();
+    }
+
+    if (_snake.head.x <= -1 ||
+        _snake.head.x >= _rightEdgeX ||
+        _snake.head.y <= -1 ||
+        _snake.head.y >= _bottomEdgeY ||
+        _snake.checkForBodyCollision()) {
+      init(); // Restart the game
+    }
+  }
+
+  Future<void> run() async {
+    update(await window.animationFrame);
+  }
+
+  void update(num delta) {
+    final num diff = delta - _lastTimeStamp;
+
+    if (diff > GAME_SPEED) {
+      _lastTimeStamp = delta;
+      clear();
+      drawCell(_food, "blue");
+      _snake.update();
+      _checkForCollisions();
+    }
+
+    // Request the next animation frame to continue the loop
+    run();
   }
 }
