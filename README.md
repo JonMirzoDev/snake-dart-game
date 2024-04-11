@@ -1,19 +1,35 @@
-A bare-bones Dart web app.
+# Classic Snake Game :snake:
 
-Uses [`package:web`](https://pub.dev/packages/web)
-to interop with JS and the DOM.
+Welcome to the Classic Snake Game, a simple yet addictive game built with Dart and leveraging web technologies. This game is a digital recreation of the beloved classic where players navigate a snake to consume food while avoiding collisions.
 
-## Running and building
+## Features
 
-To run the app, use these commands:
-```
-dart pub global activate webdev
-webdev serve
-```
+- Smooth snake movement controls using arrow keys
+- Automatically adjusts to different screen sizes and canvas dimensions
 
-To build a production version ready for deployment, use these commands:
-```
+## Running the Game
+
+To get the game up and running on your local machine, follow these steps:
+
+1. Install Dart if you haven't already (find instructions [here](https://dart.dev/get-dart)).
+2. Activate the `webdev` tool with the following command:
+
+   ```sh
+   dart pub global activate webdev
+   ```
+
+3. Serve the app locally using:
+
+   ```sh
+   webdev serve
+   ```
+
+Navigate to `localhost:8080` in your web browser to play the game.
+
+## Building for Production
+
+To create a production build of the Snake Game, run:
+
+```sh
 webdev build
 ```
-
-For more details, see https://dart.dev/web/get-started
