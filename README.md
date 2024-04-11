@@ -6,6 +6,11 @@ Welcome to the Classic Snake Game, a simple yet addictive game built with Dart a
 
 - Smooth snake movement controls using arrow keys
 - Automatically adjusts to different screen sizes and canvas dimensions
+  
+## Play Online
+
+Deployed in Vercel and you can play it [here](https://snake-dart-game.vercel.app/).
+
 
 ## Running the Game
 
